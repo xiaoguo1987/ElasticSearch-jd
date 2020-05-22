@@ -13,6 +13,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.SearchHit;
@@ -142,7 +143,11 @@ public class ContentService {
         searchSourceBuilder.size(pageSize);
 
         //精准匹配
-        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("title", keyword);
+        // TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("title", keyword); 这样搜索不到中文，改成下面的方式
+		//matchQuery：会将搜索词分词，再与目标查询字段进行匹配，若分词中的任意一个词与目标字段匹配上，则可查询到。
+		//
+		//termQuery：不会对搜索词进行分词处理，而是作为一个整体与目标字段进行匹配，若完全匹配，则可查询到。
+		MatchQueryBuilder termQueryBuilder = QueryBuilders.matchQuery("title", keyword);
         searchSourceBuilder.query(termQueryBuilder);
         searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
 

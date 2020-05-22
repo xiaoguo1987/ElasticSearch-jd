@@ -139,19 +139,19 @@
         },
         methods: {
             searchKey(){
-                let keyword = this.keyword;
+                var keyword = this.keyword;
                 console.log(keyword);
-                axios.get('search/'+keyword+"/1/30").then(response=>{
+                axios.get('search/'+keyword+"/1/300").then(response=>{
                     console.log(response);
                     this.results = response.data;
-                })
+                });
             },
             scrapyKey(){
-                let keyword1 = this.keyword1;
+                var keyword1 = this.keyword1;
                 // console.log(keyword);
                 axios.get('parse/'+keyword1).then(response=>{
                     location.reload();
-                })
+                });
             }
 
         }

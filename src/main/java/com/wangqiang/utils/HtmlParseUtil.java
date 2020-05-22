@@ -38,7 +38,8 @@ public class HtmlParseUtil {
 
         ArrayList<Content> goodList = new ArrayList<>();
         for (Element el : elements) {
-            String img = el.getElementsByTag("img").eq(0).attr("source-data-lazy-img");
+          //  String img = el.getElementsByTag("img").eq(0).attr("source-data-lazy-img");
+			String img = el.getElementsByTag("img").attr("src");
 //            String price = el.getElementsByClass("p-price").eq(0).text(); //bug 同时会取出两个价格 正常价格和会员价格
             String price = el.select("div.p-price > strong").eq(0).text();
             String title = el.getElementsByClass("p-name").eq(0).text();
@@ -50,7 +51,7 @@ public class HtmlParseUtil {
             Content content = new Content();
             content.setTitle(title);
             content.setPrice(price);
-            content.setImg(img);
+            content.setImg("https:"+img);
             content.setShop(shop);
             goodList.add(content);
 
